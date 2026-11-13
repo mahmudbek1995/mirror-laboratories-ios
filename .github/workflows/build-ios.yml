@@ -39,11 +39,12 @@ jobs:
 
       - name: Package Unsigned IPA
         run: |
-          cd ios/App/build/Build/Products/Release-iphoneos
-          mkdir Payload
-          cp -r App.app Payload/
+          APP_PATH=$(find ios/App/build -name "App.app" -type d | head -n 1)
+          echo "Found app at: $APP_PATH"
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/
           zip -r MirrorLaboratories.ipa Payload
-          mv MirrorLaboratories.ipa ../../../../../
+          ls -la MirrorLaboratories.ipa
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
