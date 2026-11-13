@@ -1,0 +1,2677 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mirror Laboratories Smile Design</title>
+  <style>
+    :root {
+      --bg: #0b0d14;
+      --panel: #161a26;
+      --panel-border: #293044;
+      --orange: #ff7043;
+      --green: #00e676;
+      --blue: #00b0ff;
+      --pink: #ff4081;
+      --purple: #d500f9;
+      --gold: #ffd600;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background: #050608;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .app-frame {
+      position: relative;
+      width: 440px;
+      height: 940px;
+      background: var(--bg);
+      border-radius: 48px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.95), 0 0 0 5px #222634, 0 0 0 8px #12141c;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 32px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .top-header {
+      padding: 48px 12px 10px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 120;
+    }
+
+    .header-row-1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .brand span { color: var(--orange); }
+
+    .top-btns {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .btn-sm {
+      background: #222838;
+      border: 1px solid var(--panel-border);
+      color: #fff;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s;
+    }
+
+    .btn-sm:active { transform: scale(0.96); }
+
+    .btn-sm.undo-btn {
+      background: #312e81;
+      border-color: #4338ca;
+      color: #e0e7ff;
+      font-weight: 700;
+    }
+
+    .btn-sm.orange {
+      background: var(--orange);
+      border: none;
+    }
+
+    .btn-sm.primary-load {
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      border: none;
+    }
+
+    /* Action Toolbar */
+    .action-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 7px 6px;
+      border-radius: 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1px solid var(--panel-border);
+      background: #202638;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .btn-action:active { transform: scale(0.97); }
+
+    .btn-action.highlight {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+    .btn-action.green {
+      background: #059669;
+      border-color: #10b981;
+    }
+
+    /* Viewport */
+    .viewport {
+      flex: 1;
+      position: relative;
+      background: #0c0e17;
+      overflow: hidden;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    #mainCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Upload Hero */
+    .upload-hero {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 30px;
+      background: rgba(22, 26, 38, 0.85);
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      text-align: center;
+      max-width: 300px;
+      cursor: pointer;
+      z-index: 50;
+      transition: all 0.2s;
+    }
+
+    .upload-hero:hover {
+      border-color: var(--green);
+      background: rgba(22, 26, 38, 0.95);
+    }
+
+    .upload-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(0, 230, 118, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+    }
+
+    .upload-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .upload-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .upload-sub {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* Left Mode Tools */
+    .left-rail {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(22, 26, 38, 0.95);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 6px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .tool-btn {
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: var(--text-dim);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 8px;
+      gap: 2px;
+    }
+
+    .tool-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .tool-btn.active {
+      background: #252c40;
+      color: var(--orange);
+      border-left: 2px solid var(--orange);
+    }
+
+    .tool-btn.active.magic {
+      color: var(--gold);
+      border-left-color: var(--gold);
+    }
+
+    .tool-btn.active.paint {
+      color: var(--pink);
+      border-left-color: var(--pink);
+    }
+
+    .tool-btn.active.pipette {
+      color: var(--purple);
+      border-left-color: var(--purple);
+    }
+
+    .tool-btn.active.pan {
+      color: var(--blue);
+      border-left-color: var(--blue);
+    }
+
+    .tool-btn.active.rotate {
+      color: #ffd600;
+      border-left-color: #ffd600;
+    }
+
+    .tool-btn.active.lines {
+      color: var(--blue);
+      border-left-color: var(--blue);
+    }
+
+    /* Zoom & Rotate HUD */
+    .zoom-hud {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(22, 26, 38, 0.94);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    .zoom-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #22283a;
+      border: 1px solid var(--panel-border);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .zoom-btn:active {
+      background: var(--orange);
+    }
+
+    .zoom-level {
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+      color: var(--blue);
+    }
+
+    /* Magic Selection Correction Sub-bar (Top of canvas) */
+    .magic-control-bar {
+      position: absolute;
+      top: 10px;
+      left: 60px;
+      right: 10px;
+      background: rgba(20, 24, 36, 0.96);
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 95;
+      font-size: 11px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .magic-control-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Lines & Smile Arc Control Sub-bar */
+    .lines-control-bar {
+      position: absolute;
+      top: 10px;
+      left: 60px;
+      right: 10px;
+      background: rgba(20, 24, 36, 0.96);
+      border: 1px solid var(--blue);
+      border-radius: 12px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 95;
+      font-size: 11px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .lines-control-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .lines-control-bar .magic-pill.active {
+      background: var(--blue);
+      color: #000;
+      border-color: var(--blue);
+    }
+
+    .magic-pill {
+      padding: 5px 9px;
+      border-radius: 7px;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1px solid var(--panel-border);
+      background: #1c2132;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .magic-pill:hover {
+      background: #283046;
+      color: #fff;
+    }
+
+    .magic-pill.active {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+      font-weight: 800;
+    }
+
+    /* Floating Tooth Opacity Badge */
+    .tooth-badge {
+      position: absolute;
+      top: 55px;
+      left: 65px;
+      right: 10px;
+      background: rgba(22, 26, 38, 0.96);
+      border: 1px solid var(--green);
+      border-radius: 12px;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 95;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    .badge-icon { font-size: 15px; }
+    .badge-content { flex: 1; display: flex; align-items: center; gap: 8px; }
+    .badge-label { font-size: 10.5px; font-weight: 700; color: #fff; white-space: nowrap; }
+    .badge-slider { flex: 1; accent-color: var(--green); height: 5px; cursor: pointer; }
+    .badge-val { font-size: 11px; font-weight: 800; color: var(--green); min-width: 40px; text-align: right; }
+
+    /* Layers */
+    .layers-box {
+      position: absolute;
+      top: 105px;
+      right: 12px;
+      width: 155px;
+      background: rgba(22, 26, 38, 0.95);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 8px 10px;
+      z-index: 90;
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 125px;
+      overflow-y: auto;
+    }
+
+    .layers-title {
+      font-size: 10px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .layer-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 9.5px;
+      padding: 4px 5px;
+      background: #1c2132;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .layer-row.active {
+      border: 1px solid var(--orange);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Bottom Panel */
+    .bottom-panel {
+      background: var(--panel);
+      border-top: 1px solid var(--panel-border);
+      padding: 10px 14px 22px;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+    }
+
+    .slider-row label {
+      min-width: 135px;
+      color: var(--text-dim);
+    }
+
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: var(--orange);
+      height: 4px;
+    }
+
+    .slider-row input[type="range"].gold-slider {
+      accent-color: var(--gold);
+    }
+
+    .slider-row input[type="range"].green-slider {
+      accent-color: var(--green);
+    }
+
+    .slider-row span {
+      min-width: 40px;
+      text-align: right;
+      font-weight: 600;
+    }
+
+    .status-msg {
+      font-size: 10px;
+      color: var(--green);
+      background: rgba(0, 230, 118, 0.08);
+      border: 1px dashed rgba(0, 230, 118, 0.3);
+      padding: 6px 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .home-bar {
+      width: 130px;
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      margin: 6px auto 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-frame">
+    <div class="island"></div>
+
+    <header class="top-header">
+      <div class="header-row-1">
+        <div class="brand">MIRROR LABORATORIES <span>SMILE DESIGN</span></div>
+        <div class="top-btns">
+          <button class="btn-sm undo-btn" id="btnUndo" title="Orqaga qaytarish (Ctrl+Z)">
+            ↶ Orqaga (<span id="undoCount">0</span>)
+          </button>
+          <label for="imgInp" class="btn-sm primary-load">＋ Rasm</label>
+          <input type="file" id="imgInp" accept="image/*" style="display:none">
+          <button class="btn-sm" id="btnFit" title="Asl ko'rinish">Moslash</button>
+          <button class="btn-sm orange" id="btnExport">Exportar</button>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-action highlight" id="btnCut" title="Belgilangan tishni ajratib olish">
+          ✂ Kesib olish
+        </button>
+        <button class="btn-action green" id="btnMirror" title="Simmetrik nusxa yaratish">
+          ⇄ Simmetrik nusxa
+        </button>
+        <button class="btn-action" id="btnToggleAllGuides" title="Barcha liniyalarni ko'rsatish yoki o'chirish">
+          👁️ Liniyalar (Ko'rsatish)
+        </button>
+        <button class="btn-action" id="btnClear">
+          ✕ Bekor qilish
+        </button>
+      </div>
+    </header>
+
+    <main class="viewport" id="viewport">
+      <canvas id="mainCanvas"></canvas>
+
+      <label for="imgInp" class="upload-hero" id="uploadHero">
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        </div>
+        <div class="upload-title">Bemor rasmini yuklang</div>
+        <div class="upload-sub">"Magic" funksiyasi orqali tish ustiga bosing, chegaralarni nuqtalar yoki (+/-) cho'tka orqali to'liq korreksiya qiling.</div>
+      </label>
+
+      <!-- Magic Correction Mode Bar -->
+      <div class="magic-control-bar" id="magicBar" style="display:none;">
+        <span style="font-weight:700; color:var(--gold); white-space:nowrap;">✨ Magic Korreksiya:</span>
+        <button class="magic-pill active" id="btnMagicPoints" title="Nuqtalarni surish yoki chiziqqa bosib yangi nuqta qo'shish">
+          📍 Nuqtalar
+        </button>
+        <button class="magic-pill" id="btnMagicSculpt" title="Chegarani stilus/barmoq bilan loydek itarib yoki tortib to'g'rilash">
+          ✋ Chegarani surish
+        </button>
+        <button class="magic-pill" id="btnMagicExpand" title="Chegarani 8% kengaytirish">
+          ＋ Kengaytirish
+        </button>
+        <button class="magic-pill" id="btnMagicShrink" title="Chegarani 8% qisqartirish">
+          － Qisqartirish
+        </button>
+        <button class="magic-pill" id="btnMagicReset" title="Boshqa tish ustiga bosib yangidan tanlash" style="color:var(--orange);">
+          🔄 Boshqa tish
+        </button>
+        <button class="magic-pill" id="btnMagicCutNow" style="background:var(--green); color:#000; border-color:var(--green); font-weight:800;" title="Korreksiya qilingan tishni kesib olish">
+          ✂️ Kesib olish
+        </button>
+      </div>
+
+      <!-- Lines & Smile Arc Control Mode Bar -->
+      <div class="lines-control-bar" id="linesBar" style="display:none;">
+        <span style="font-weight:700; color:var(--blue); white-space:nowrap;">📐 Liniyalar:</span>
+        <button class="magic-pill" id="btnToggleAllGuidesSub" title="Barcha liniyalarni yoqish yoki o'chirish">
+          👁️ Liniyalarni yoqish
+        </button>
+        <button class="magic-pill active" id="btnPencilLine" title="Liniya chizish qalami">
+          ✏️ Qalam
+        </button>
+        <button class="magic-pill" id="btnEraseLine" title="Chiziqlarni o'chirish">
+          🧹 O'chirgich
+        </button>
+        <button class="magic-pill" id="btnPencilColor" title="Chiziq rangini tanlash">
+          🎨 Rang
+        </button>
+        <button class="magic-pill" id="btnToggleArc" title="Kulgi yoyini yoqish/o'chirish">
+          😃 Kulgi yoyi
+        </button>
+        <button class="magic-pill" id="btnToggleMidline" title="Yuz/tish o'rta chizig'i">
+          📐 O'rta
+        </button>
+        <button class="magic-pill" id="btnToggleZenith" title="Milk zenit balandlik chizig'i">
+          🦷 Zenit
+        </button>
+        <button class="magic-pill" id="btnClearLines" style="color:var(--orange);" title="Barcha liniyalarni tozalash va o'chirish">
+          ✕ Tozalash
+        </button>
+      </div>
+
+      <!-- Active Tooth Opacity Bar -->
+      <div class="tooth-badge" id="toothOpacityBadge" style="display:none;">
+        <span class="badge-icon">🦷</span>
+        <div class="badge-content">
+          <span class="badge-label" id="badgeToothName">Tish shaffofligi:</span>
+          <input type="range" class="badge-slider" id="badgeOpacitySlider" min="0" max="100" value="95">
+          <span class="badge-val" id="badgeOpacityVal">95%</span>
+        </div>
+      </div>
+
+      <!-- Left Rail Tools -->
+      <div class="left-rail">
+        <!-- Magic Wand Tool -->
+        <button class="tool-btn magic" id="toolMagic" data-mode="magic" title="Magic: Tishni avtomatik topish va korreksiya qilish">
+          <svg viewBox="0 0 24 24"><path d="M15 4V2m0 16v-2M8 9h2m10 0h-2M17.8 6.2l-1.4 1.4M7.6 16.4l-1.4 1.4M6.2 6.2l1.4 1.4m10.2 8.8l1.4 1.4M3 21l9-9"/></svg>
+          <span>Magic</span>
+        </button>
+        <button class="tool-btn active" id="toolLasso" data-mode="lasso" title="Tishni erkin chizish">
+          <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          <span>Chizish</span>
+        </button>
+        <button class="tool-btn" id="toolMove" data-mode="move" title="Tishni surish va masshtab">
+          <svg viewBox="0 0 24 24"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
+          <span>Tish</span>
+        </button>
+        <button class="tool-btn" id="toolLines" data-mode="lines" title="Kulgi va tish chiziqlari (DSD Guides)">
+          <svg viewBox="0 0 24 24"><path d="M3 17c4-6 14-6 18 0M3 12c5-3 13-3 18 0M12 3v18"/></svg>
+          <span>Liniya</span>
+        </button>
+        <button class="tool-btn paint" id="toolPaint" data-mode="paint" title="Bo'yash">
+          <svg viewBox="0 0 24 24"><path d="M18.37 2.63L14 7l3 3 4.37-4.37a2.12 2.12 0 1 0-3-3z"/><path d="M9 12l-5 5v4h4l5-5"/></svg>
+          <span>Bo'yash</span>
+        </button>
+        <button class="tool-btn pipette" id="toolPipette" data-mode="pipette" title="Pipetka">
+          <svg viewBox="0 0 24 24"><path d="M14 2l4 4L7 17l-4 1 1-4L14 2z"/><path d="M12 4l4 4"/><circle cx="4" cy="20" r="1.5"/></svg>
+          <span>Pipetka</span>
+        </button>
+        <button class="tool-btn" id="toolPull" data-mode="pull" title="Tortish">
+          <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9a9 9 0 0 1-9-9c0-4.97 4.03-9 9-9z"/><path d="M7 12l5-5 5 5M12 7v10"/></svg>
+          <span>Tortish</span>
+        </button>
+        <button class="tool-btn pan" id="toolPan" data-mode="pan" title="Surish">
+          <svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v6M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+          <span>Surish</span>
+        </button>
+        <button class="tool-btn rotate" id="toolRotatePhoto" data-mode="rotate_photo" title="Aylantirish">
+          <svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Aylantirish</span>
+        </button>
+      </div>
+
+      <!-- Zoom HUD -->
+      <div class="zoom-hud">
+        <button class="zoom-btn" id="zoomOut" title="Kichraytirish">−</button>
+        <span class="zoom-level" id="zoomText">100%</span>
+        <button class="zoom-btn" id="zoomIn" title="Kattalashtirish">＋</button>
+        <button class="zoom-btn" id="btnRotate90" title="90° o'girish" style="font-size:11px;">↻90°</button>
+      </div>
+
+      <!-- Layers -->
+      <div class="layers-box">
+        <div class="layers-title">
+          <span>Qatlamlar</span>
+          <span id="layerCount">0 ta tish</span>
+        </div>
+        <div id="layersList" style="display:flex; flex-direction:column; gap:3px; max-height:120px; overflow-y:auto;">
+          <div class="layer-row active">
+            <span>Asl fotosurat</span>
+          </div>
+        </div>
+        <button class="btn-action green" id="btnMirrorSelected" style="margin-top:6px; font-size:10px; padding:5px 6px; width:100%; display:flex; align-items:center; justify-content:center; gap:4px;" title="Belgilangan 2-3 ta tishni baravar simmetrik nusxalash">
+          ⇄ Tanlanganlarni simmetriyalash
+        </button>
+      </div>
+    </main>
+
+    <footer class="bottom-panel">
+      <!-- 1. Magic Tolerance / Sensitivity Slider -->
+      <div class="slider-row" id="rowMagicTol">
+        <label style="color:var(--gold); font-weight:700;">Magic sezgirligi (Tolerance):</label>
+        <input type="range" class="gold-slider" id="slMagicTol" min="10" max="90" value="40">
+        <span id="txtMagicTol" style="color:var(--gold); font-weight:700;">40</span>
+      </div>
+
+      <!-- 2. Brush / Pull Radius Slider -->
+      <div class="slider-row" id="rowBrushRadius" style="display:none;">
+        <label style="color:var(--orange); font-weight:700;">Cho'tka / Tortish radiusi:</label>
+        <input type="range" id="slBrushRadius" min="10" max="100" value="35">
+        <span id="txtBrushRadius" style="color:var(--orange); font-weight:700;">35px</span>
+      </div>
+
+      <!-- 3. Tooth Opacity Slider -->
+      <div class="slider-row">
+        <label style="color:var(--green); font-weight:700;">Kesilgan tish shaffofligi:</label>
+        <input type="range" class="green-slider" id="slToothOpacity" min="0" max="100" value="95">
+        <span id="txtToothOpacity" style="color:var(--green); font-weight:700;">95%</span>
+      </div>
+
+      <div class="status-msg" id="statusMsg">
+        ✨ Magic rejimida tish ustiga bosing — chegara nuqtalarini stilus bilan surib erkin korreksiya qiling!
+      </div>
+      <div class="home-bar"></div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    const viewport = document.getElementById('viewport');
+    const uploadHero = document.getElementById('uploadHero');
+    const toothOpacityBadge = document.getElementById('toothOpacityBadge');
+    const magicBar = document.getElementById('magicBar');
+    const linesBar = document.getElementById('linesBar');
+
+    let bg = null;
+    let bgReady = false;
+    let bgCanvas = null;
+
+    let zoom = 1.0;
+    let panX = 0;
+    let panY = 0;
+    let photoRotation = 0;
+
+    let currentMode = 'magic'; // 'magic', 'lasso', 'move', 'lines', 'paint', 'pipette', 'pull', 'pan', 'rotate_photo'
+    let strokePath = [];
+    let isDrawing = false;
+    let extractedTeeth = [];
+    let activeTooth = null;
+    let selectedTeeth = new Set(); // Multi-tooth selection for parallel mirroring
+
+    // Free Painting Layer
+    let paintCanvas = document.createElement('canvas');
+    let paintCtx = paintCanvas.getContext('2d');
+
+    // DSD Tooth Anatomy & Smile Lines Layer (Interactive Draggable Guides)
+    let anatomyCanvas = document.createElement('canvas');
+    let anatomyCtx = anatomyCanvas.getContext('2d');
+    let showSmileGuides = false; // Default OFF: "Har doim chiqishi shart emas"
+    let showSmileArc = true;
+    let showMidline = true;
+    let showZenithLine = true;
+    let anatomyColor = '#00e5ff';
+    let anatomyWidth = 2.5;
+    let lineMode = 'pencil'; // 'pencil' or 'eraser'
+    let lastAnatomyPos = null;
+
+    // Draggable Smile Design Guide Handles
+    let arcP0 = null; // Smile Arc Left Wing
+    let arcP1 = null; // Smile Arc Center Apex (Pullable)
+    let arcP2 = null; // Smile Arc Right Wing
+    let midP0 = null; // Midline Top
+    let midP1 = null; // Midline Bottom
+    let zenP0 = null; // Zenith Left
+    let zenP1 = null; // Zenith Center Apex
+    let zenP2 = null; // Zenith Right
+    let selectedGuideHandle = null;
+    let guideDragStart = null;
+
+    function initGuideCoordinates(force = false) {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      const cx = w * 0.5;
+      const cy = h * 0.54;
+
+      if (force || !arcP1) {
+        arcP0 = { x: cx - 170, y: cy - 15 };
+        arcP1 = { x: cx,       y: cy + 38 };
+        arcP2 = { x: cx + 170, y: cy - 15 };
+      }
+      if (force || !midP0) {
+        midP0 = { x: cx, y: cy - 260 };
+        midP1 = { x: cx, y: cy + 260 };
+      }
+      if (force || !zenP1) {
+        zenP0 = { x: cx - 170, y: cy - 70 };
+        zenP1 = { x: cx,       y: cy - 95 };
+        zenP2 = { x: cx + 170, y: cy - 70 };
+      }
+    }
+
+    function hitTestGuide(spos, wpos) {
+      if (!showSmileGuides) return null;
+      if (!arcP1) initGuideCoordinates();
+
+      const hitR = 28; // Screen pixels tolerance
+
+      // 1. Smile Arc Handles
+      if (showSmileArc && arcP1) {
+        const sArcP1 = worldToScreen(arcP1.x, arcP1.y);
+        if (Math.hypot(spos.x - sArcP1.x, spos.y - sArcP1.y) < hitR) return 'arc_p1';
+
+        const sArcP0 = worldToScreen(arcP0.x, arcP0.y);
+        if (Math.hypot(spos.x - sArcP0.x, spos.y - sArcP0.y) < hitR) return 'arc_p0';
+
+        const sArcP2 = worldToScreen(arcP2.x, arcP2.y);
+        if (Math.hypot(spos.x - sArcP2.x, spos.y - sArcP2.y) < hitR) return 'arc_p2';
+      }
+
+      // 2. Midline Handles
+      if (showMidline && midP0 && midP1) {
+        const midCx = (midP0.x + midP1.x) * 0.5;
+        const midCy = (midP0.y + midP1.y) * 0.5;
+        const sMidC = worldToScreen(midCx, midCy);
+        if (Math.hypot(spos.x - sMidC.x, spos.y - sMidC.y) < hitR) return 'mid_center';
+
+        const sMidP0 = worldToScreen(midP0.x, midP0.y);
+        if (Math.hypot(spos.x - sMidP0.x, spos.y - sMidP0.y) < hitR) return 'mid_p0';
+
+        const sMidP1 = worldToScreen(midP1.x, midP1.y);
+        if (Math.hypot(spos.x - sMidP1.x, spos.y - sMidP1.y) < hitR) return 'mid_p1';
+      }
+
+      // 3. Zenith Handles
+      if (showZenithLine && zenP1) {
+        const sZenP1 = worldToScreen(zenP1.x, zenP1.y);
+        if (Math.hypot(spos.x - sZenP1.x, spos.y - sZenP1.y) < hitR) return 'zen_p1';
+
+        const sZenP0 = worldToScreen(zenP0.x, zenP0.y);
+        if (Math.hypot(spos.x - sZenP0.x, spos.y - sZenP0.y) < hitR) return 'zen_p0';
+
+        const sZenP2 = worldToScreen(zenP2.x, zenP2.y);
+        if (Math.hypot(spos.x - sZenP2.x, spos.y - sZenP2.y) < hitR) return 'zen_p2';
+      }
+
+      // 4. Proximity to curves (grabbing anywhere on curve moves the curve)
+      if (showSmileArc && arcP1) {
+        let minArcDist = 999;
+        for (let i = 0; i <= 16; i++) {
+          const t = i / 16;
+          const it = 1 - t;
+          const bx = it * it * arcP0.x + 2 * it * t * arcP1.x + t * t * arcP2.x;
+          const by = it * it * arcP0.y + 2 * it * t * arcP1.y + t * t * arcP2.y;
+          const sp = worldToScreen(bx, by);
+          const d = Math.hypot(spos.x - sp.x, spos.y - sp.y);
+          if (d < minArcDist) minArcDist = d;
+        }
+        if (minArcDist < 22) return 'arc_body';
+      }
+
+      if (showMidline && midP0 && midP1) {
+        const sMid0 = worldToScreen(midP0.x, midP0.y);
+        const sMid1 = worldToScreen(midP1.x, midP1.y);
+        const dMid = distToSegment(spos, sMid0, sMid1);
+        if (dMid < 22) return 'mid_body';
+      }
+
+      if (showZenithLine && zenP1) {
+        let minZenDist = 999;
+        for (let i = 0; i <= 16; i++) {
+          const t = i / 16;
+          const it = 1 - t;
+          const bx = it * it * zenP0.x + 2 * it * t * zenP1.x + t * t * zenP2.x;
+          const by = it * it * zenP0.y + 2 * it * t * zenP1.y + t * t * zenP2.y;
+          const sp = worldToScreen(bx, by);
+          const d = Math.hypot(spos.x - sp.x, spos.y - sp.y);
+          if (d < minZenDist) minZenDist = d;
+        }
+        if (minZenDist < 22) return 'zen_body';
+      }
+
+      return null;
+    }
+
+    let pickedColor = '#ffffff';
+    let brushOpacity = 0.35;
+    let brushRadius = 35;
+    let lastBrushPos = null;
+    let lastSculptPos = null;
+
+    // MAGIC WAND & CORRECTION STATE
+    let magicTolerance = 40;
+    let magicPoints = []; // Control points forming the smooth tooth contour
+    let selectedMagicPoint = null;
+    let magicEditMode = 'points'; // 'points', 'sculpt'
+
+    const undoStack = [];
+    const MAX_UNDO = 30;
+
+    function saveState() {
+      const teethClone = extractedTeeth.map(t => {
+        const copyCvs = document.createElement('canvas');
+        copyCvs.width = t.canvas.width;
+        copyCvs.height = t.canvas.height;
+        copyCvs.getContext('2d').drawImage(t.canvas, 0, 0);
+        return {
+          id: t.id,
+          name: t.name,
+          canvas: copyCvs,
+          x: t.x,
+          y: t.y,
+          w: t.w,
+          h: t.h,
+          rotation: t.rotation,
+          flipped: t.flipped,
+          brightness: t.brightness || 100,
+          opacity: t.opacity
+        };
+      });
+
+      const paintClone = document.createElement('canvas');
+      paintClone.width = paintCanvas.width;
+      paintClone.height = paintCanvas.height;
+      paintClone.getContext('2d').drawImage(paintCanvas, 0, 0);
+
+      const anatomyClone = document.createElement('canvas');
+      anatomyClone.width = anatomyCanvas.width;
+      anatomyClone.height = anatomyCanvas.height;
+      anatomyClone.getContext('2d').drawImage(anatomyCanvas, 0, 0);
+
+      let bgClone = null;
+      if (bgCanvas && bgReady) {
+        bgClone = document.createElement('canvas');
+        bgClone.width = bgCanvas.width;
+        bgClone.height = bgCanvas.height;
+        bgClone.getContext('2d').drawImage(bgCanvas, 0, 0);
+      }
+
+      undoStack.push({
+        teeth: teethClone,
+        paint: paintClone,
+        anatomy: anatomyClone,
+        bgCanvas: bgClone,
+        magicPoints: magicPoints.map(p => ({ ...p })),
+        activeToothId: activeTooth ? activeTooth.id : null,
+        selectedTeeth: new Set(selectedTeeth),
+        panX, panY, zoom, photoRotation,
+        guides: {
+          showSmileGuides,
+          showSmileArc,
+          showMidline,
+          showZenithLine,
+          arcP0: arcP0 ? { ...arcP0 } : null,
+          arcP1: arcP1 ? { ...arcP1 } : null,
+          arcP2: arcP2 ? { ...arcP2 } : null,
+          midP0: midP0 ? { ...midP0 } : null,
+          midP1: midP1 ? { ...midP1 } : null,
+          zenP0: zenP0 ? { ...zenP0 } : null,
+          zenP1: zenP1 ? { ...zenP1 } : null,
+          zenP2: zenP2 ? { ...zenP2 } : null
+        }
+      });
+
+      if (undoStack.length > MAX_UNDO) undoStack.shift();
+      updateUndoUI();
+    }
+
+    function undo() {
+      if (undoStack.length === 0) return;
+      const state = undoStack.pop();
+
+      extractedTeeth = state.teeth;
+      activeTooth = extractedTeeth.find(t => t.id === state.activeToothId) || (extractedTeeth[extractedTeeth.length - 1] || null);
+      selectedTeeth = state.selectedTeeth || new Set();
+
+      paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+      paintCtx.drawImage(state.paint, 0, 0);
+
+      if (state.anatomy) {
+        anatomyCtx.clearRect(0, 0, anatomyCanvas.width, anatomyCanvas.height);
+        anatomyCtx.drawImage(state.anatomy, 0, 0);
+      }
+
+      if (state.bgCanvas && bgCanvas) {
+        bgCanvas.width = state.bgCanvas.width;
+        bgCanvas.height = state.bgCanvas.height;
+        const bgCtx = bgCanvas.getContext('2d');
+        bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+        bgCtx.drawImage(state.bgCanvas, 0, 0);
+      }
+
+      if (state.guides) {
+        showSmileGuides = state.guides.showSmileGuides;
+        showSmileArc = state.guides.showSmileArc;
+        showMidline = state.guides.showMidline;
+        showZenithLine = state.guides.showZenithLine;
+        arcP0 = state.guides.arcP0 ? { ...state.guides.arcP0 } : arcP0;
+        arcP1 = state.guides.arcP1 ? { ...state.guides.arcP1 } : arcP1;
+        arcP2 = state.guides.arcP2 ? { ...state.guides.arcP2 } : arcP2;
+        midP0 = state.guides.midP0 ? { ...state.guides.midP0 } : midP0;
+        midP1 = state.guides.midP1 ? { ...state.guides.midP1 } : midP1;
+        zenP0 = state.guides.zenP0 ? { ...state.guides.zenP0 } : zenP0;
+        zenP1 = state.guides.zenP1 ? { ...state.guides.zenP1 } : zenP1;
+        zenP2 = state.guides.zenP2 ? { ...state.guides.zenP2 } : zenP2;
+        if (typeof updateGuidesUI === 'function') updateGuidesUI();
+      }
+
+      magicPoints = state.magicPoints || [];
+      panX = state.panX;
+      panY = state.panY;
+      zoom = state.zoom;
+      photoRotation = state.photoRotation;
+
+      if (activeTooth) selectTooth(activeTooth);
+      else toothOpacityBadge.style.display = 'none';
+
+      updateLayersUI();
+      updateUndoUI();
+      render();
+      document.getElementById('statusMsg').innerText = "↶ Amal orqaga qaytarildi!";
+    }
+
+    function updateUndoUI() {
+      document.getElementById('undoCount').innerText = undoStack.length;
+    }
+
+    let isInteracting = false;
+    let dragMode = null;
+    let dragStartPos = { x: 0, y: 0 };
+    let initialToothState = null;
+    let initialPan = { x: 0, y: 0 };
+    let initialPhotoRot = 0;
+    let initialPinchDist = null;
+    let initialPinchZoom = 1.0;
+
+    function resizeCanvas() {
+      const rect = viewport.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+
+      if (paintCanvas.width !== canvas.width || paintCanvas.height !== canvas.height) {
+        const temp = document.createElement('canvas');
+        temp.width = paintCanvas.width;
+        temp.height = paintCanvas.height;
+        temp.getContext('2d').drawImage(paintCanvas, 0, 0);
+
+        paintCanvas.width = canvas.width;
+        paintCanvas.height = canvas.height;
+        paintCtx.drawImage(temp, 0, 0);
+      }
+
+      if (anatomyCanvas.width !== canvas.width || anatomyCanvas.height !== canvas.height) {
+        const tempA = document.createElement('canvas');
+        tempA.width = anatomyCanvas.width;
+        tempA.height = anatomyCanvas.height;
+        tempA.getContext('2d').drawImage(anatomyCanvas, 0, 0);
+
+        anatomyCanvas.width = canvas.width;
+        anatomyCanvas.height = canvas.height;
+        anatomyCtx.drawImage(tempA, 0, 0);
+      }
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      render();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    setTimeout(resizeCanvas, 50);
+
+    function screenToWorld(sx, sy) {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      const cx = w / 2;
+      const cy = h / 2;
+
+      let x = (sx - cx - panX) / zoom;
+      let y = (sy - cy - panY) / zoom;
+
+      const rad = (-photoRotation * Math.PI) / 180;
+      const rx = x * Math.cos(rad) - y * Math.sin(rad);
+      const ry = x * Math.sin(rad) + y * Math.cos(rad);
+
+      return {
+        x: rx + cx,
+        y: ry + cy
+      };
+    }
+
+    function worldToScreen(wx, wy) {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      const cx = w / 2;
+      const cy = h / 2;
+
+      const dx = wx - cx;
+      const dy = wy - cy;
+      const rad = (photoRotation * Math.PI) / 180;
+      const rx = dx * Math.cos(rad) - dy * Math.sin(rad);
+      const ry = dx * Math.sin(rad) + dy * Math.cos(rad);
+
+      return {
+        x: (rx * zoom) + cx + panX,
+        y: (ry * zoom) + cy + panY
+      };
+    }
+
+    function distToSegment(p, a, b) {
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const l2 = dx * dx + dy * dy;
+      if (l2 === 0) return Math.hypot(p.x - a.x, p.y - a.y);
+      let t = ((p.x - a.x) * dx + (p.y - a.y) * dy) / l2;
+      t = Math.max(0, Math.min(1, t));
+      return Math.hypot(p.x - (a.x + t * dx), p.y - (a.y + t * dy));
+    }
+
+    function render() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      if (!w || !h) return;
+
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.save();
+      const cx = w / 2;
+      const cy = h / 2;
+
+      ctx.translate(cx + panX, cy + panY);
+      ctx.scale(zoom, zoom);
+      ctx.rotate((photoRotation * Math.PI) / 180);
+      ctx.translate(-cx, -cy);
+
+      // 1. Photo
+      const photoSource = bgCanvas || bg;
+      if (photoSource && bgReady) {
+        const imgRatio = photoSource.width / photoSource.height;
+        const canvasRatio = w / h;
+        let dw = w, dh = h, dx = 0, dy = 0;
+        if (canvasRatio > imgRatio) {
+          dh = w / imgRatio;
+          dy = (h - dh) / 2;
+        } else {
+          dw = h * imgRatio;
+          dx = (w - dw) / 2;
+        }
+        ctx.drawImage(photoSource, dx, dy, dw, dh);
+      } else {
+        ctx.fillStyle = '#0f121d';
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      // 2. DSD Interactive Draggable Guides (Kulgi yoyi, O'rta chiziq, Zenit)
+      if (showSmileGuides) {
+        if (!arcP1) initGuideCoordinates();
+
+        // Vertical Midline (Yuz / tish o'rta chizig'i)
+        if (showMidline && midP0 && midP1) {
+          ctx.save();
+          ctx.strokeStyle = '#00e676';
+          ctx.lineWidth = 2.2 / zoom;
+          ctx.setLineDash([7 / zoom, 4 / zoom]);
+          ctx.beginPath();
+          ctx.moveTo(midP0.x, midP0.y);
+          ctx.lineTo(midP1.x, midP1.y);
+          ctx.stroke();
+
+          // Draggable Handles
+          const r = 7.5 / zoom;
+          const midCx = (midP0.x + midP1.x) * 0.5;
+          const midCy = (midP0.y + midP1.y) * 0.5;
+          const midHandles = [
+            { pt: midP0, name: 'mid_p0' },
+            { pt: { x: midCx, y: midCy }, name: 'mid_center' },
+            { pt: midP1, name: 'mid_p1' }
+          ];
+          midHandles.forEach(h => {
+            ctx.beginPath();
+            ctx.arc(h.pt.x, h.pt.y, r, 0, Math.PI * 2);
+            ctx.fillStyle = (selectedGuideHandle === h.name || selectedGuideHandle === 'mid_body') ? '#ffffff' : '#00e676';
+            ctx.fill();
+            ctx.strokeStyle = '#003311';
+            ctx.lineWidth = 2.0 / zoom;
+            ctx.setLineDash([]);
+            ctx.stroke();
+          });
+          ctx.restore();
+        }
+
+        // Smile Arc (Kulgi yoyi - Pastki lab egriligiga moslab tortish)
+        if (showSmileArc && arcP1) {
+          ctx.save();
+          ctx.strokeStyle = '#ffd600';
+          ctx.lineWidth = 3.0 / zoom;
+          ctx.setLineDash([7 / zoom, 4 / zoom]);
+          ctx.beginPath();
+          ctx.moveTo(arcP0.x, arcP0.y);
+          ctx.quadraticCurveTo(arcP1.x, arcP1.y, arcP2.x, arcP2.y);
+          ctx.stroke();
+
+          // Apex & Wings Handles (Erkin tortish va shakl berish)
+          const r = 8.5 / zoom;
+          const arcHandles = [
+            { pt: arcP0, name: 'arc_p0', color: '#ffd600' },
+            { pt: arcP1, name: 'arc_p1', color: '#ff9100' }, // Center apex: pastga/yuqoriga tortish
+            { pt: arcP2, name: 'arc_p2', color: '#ffd600' }
+          ];
+          arcHandles.forEach(h => {
+            ctx.beginPath();
+            ctx.arc(h.pt.x, h.pt.y, r, 0, Math.PI * 2);
+            ctx.fillStyle = (selectedGuideHandle === h.name || selectedGuideHandle === 'arc_body') ? '#ffffff' : h.color;
+            ctx.fill();
+            ctx.strokeStyle = '#221100';
+            ctx.lineWidth = 2.2 / zoom;
+            ctx.setLineDash([]);
+            ctx.stroke();
+          });
+          ctx.restore();
+        }
+
+        // Zenith Line (Milk balandlik chizig'i)
+        if (showZenithLine && zenP1) {
+          ctx.save();
+          ctx.strokeStyle = '#ff4081';
+          ctx.lineWidth = 2.2 / zoom;
+          ctx.setLineDash([5 / zoom, 4 / zoom]);
+          ctx.beginPath();
+          ctx.moveTo(zenP0.x, zenP0.y);
+          ctx.quadraticCurveTo(zenP1.x, zenP1.y, zenP2.x, zenP2.y);
+          ctx.stroke();
+
+          const r = 7.5 / zoom;
+          const zenHandles = [
+            { pt: zenP0, name: 'zen_p0' },
+            { pt: zenP1, name: 'zen_p1' },
+            { pt: zenP2, name: 'zen_p2' }
+          ];
+          zenHandles.forEach(h => {
+            ctx.beginPath();
+            ctx.arc(h.pt.x, h.pt.y, r, 0, Math.PI * 2);
+            ctx.fillStyle = (selectedGuideHandle === h.name || selectedGuideHandle === 'zen_body') ? '#ffffff' : '#ff4081';
+            ctx.fill();
+            ctx.strokeStyle = '#330011';
+            ctx.lineWidth = 2.0 / zoom;
+            ctx.setLineDash([]);
+            ctx.stroke();
+          });
+          ctx.restore();
+        }
+      }
+
+      // 3. Teeth Layers
+      extractedTeeth.forEach(t => renderTooth(t));
+
+      // 4. Painting & Anatomy Layers
+      const dpr = window.devicePixelRatio || 1;
+      ctx.drawImage(paintCanvas, 0, 0, paintCanvas.width / dpr, paintCanvas.height / dpr);
+      ctx.drawImage(anatomyCanvas, 0, 0, anatomyCanvas.width / dpr, anatomyCanvas.height / dpr);
+
+      // 5. Render Magic Selection Contour with Editable Handles
+      if (magicPoints.length > 2) {
+        renderMagicContour();
+      }
+
+      // 6. Brush Cursor Indicator (Pull, Paint, Lines)
+      if ((currentMode === 'pull' || currentMode === 'paint' || currentMode === 'lines') && isInteracting && lastBrushPos) {
+        ctx.save();
+        ctx.beginPath();
+        const r = (currentMode === 'lines') ? (lineMode === 'eraser' ? 12 : anatomyWidth * 1.5) : brushRadius;
+        ctx.arc(lastBrushPos.x, lastBrushPos.y, r, 0, Math.PI * 2);
+        ctx.strokeStyle = (currentMode === 'pull') ? '#00e676' : ((currentMode === 'lines') ? (lineMode === 'eraser' ? '#ff1744' : anatomyColor) : '#ff4081');
+        ctx.lineWidth = 1.8 / zoom;
+        ctx.setLineDash([4 / zoom, 3 / zoom]);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // 6. Normal Lasso Line
+      if (strokePath.length > 1) {
+        ctx.save();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5 / zoom;
+        ctx.setLineDash([4 / zoom, 4 / zoom]);
+        ctx.beginPath();
+        strokePath.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(pt.x, pt.y);
+          else ctx.lineTo(pt.x, pt.y);
+        });
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    function renderTooth(t) {
+      ctx.save();
+      ctx.translate(t.x, t.y);
+      ctx.rotate((t.rotation * Math.PI) / 180);
+
+      ctx.globalAlpha = t.opacity;
+
+      if (t.flipped) {
+        ctx.scale(-1, 1);
+      }
+
+      ctx.drawImage(t.canvas, -t.w / 2, -t.h / 2, t.w, t.h);
+      ctx.restore();
+
+      if (t === activeTooth && currentMode === 'move') {
+        drawToothHandles(t);
+      }
+    }
+
+    function drawToothHandles(t) {
+      ctx.save();
+      ctx.translate(t.x, t.y);
+      ctx.rotate((t.rotation * Math.PI) / 180);
+
+      const hw = t.w / 2;
+      const hh = t.h / 2;
+
+      ctx.strokeStyle = '#00e676';
+      ctx.lineWidth = 2 / zoom;
+      ctx.strokeRect(-hw, -hh, t.w, t.h);
+
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = '#00e676';
+      ctx.lineWidth = 1.5 / zoom;
+      const s = 10 / zoom;
+      [[-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]].forEach(([hx, hy]) => {
+        ctx.beginPath();
+        ctx.rect(hx - s/2, hy - s/2, s, s);
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      ctx.beginPath();
+      ctx.moveTo(0, -hh);
+      ctx.lineTo(0, -hh - (24 / zoom));
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, -hh - (24 / zoom), 8 / zoom, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff7043';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2 / zoom;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // Render Magic Contour and Control Points
+    function renderMagicContour() {
+      ctx.save();
+
+      // Smooth closed curve
+      ctx.beginPath();
+      ctx.moveTo(magicPoints[0].x, magicPoints[0].y);
+      for (let i = 0; i < magicPoints.length; i++) {
+        const p1 = magicPoints[i];
+        const p2 = magicPoints[(i + 1) % magicPoints.length];
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+        ctx.quadraticCurveTo(p1.x, p1.y, midX, midY);
+      }
+      ctx.closePath();
+
+      // Gold Glow and outline
+      ctx.strokeStyle = '#ffd600';
+      ctx.lineWidth = 2.5 / zoom;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255, 214, 0, 0.15)';
+      ctx.fill();
+
+      // Draw Editable Control Points (Handles)
+      if (currentMode === 'magic') {
+        const r = 5 / zoom;
+        magicPoints.forEach((pt, idx) => {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = (pt === selectedMagicPoint) ? '#ff5722' : '#ffffff';
+          ctx.fill();
+          ctx.strokeStyle = '#ffd600';
+          ctx.lineWidth = 1.5 / zoom;
+          ctx.stroke();
+        });
+      }
+
+      ctx.restore();
+    }
+
+    function toToothLocal(worldPos, t) {
+      const dx = worldPos.x - t.x;
+      const dy = worldPos.y - t.y;
+      const rad = (-t.rotation * Math.PI) / 180;
+      return {
+        x: dx * Math.cos(rad) - dy * Math.sin(rad),
+        y: dx * Math.sin(rad) + dy * Math.cos(rad)
+      };
+    }
+
+    function getScreenPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    viewport.addEventListener('wheel', e => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 1.15 : 0.85;
+      setZoom(zoom * delta);
+    }, { passive: false });
+
+    function setZoom(newZoom) {
+      zoom = Math.max(0.4, Math.min(5.0, newZoom));
+      document.getElementById('zoomText').innerText = `${Math.round(zoom * 100)}%`;
+      render();
+    }
+
+    function setPhotoRotation(deg) {
+      saveState();
+      photoRotation = deg;
+      if (photoRotation > 180) photoRotation -= 360;
+      if (photoRotation < -180) photoRotation += 360;
+      render();
+    }
+
+    document.getElementById('btnRotate90').addEventListener('click', () => {
+      setPhotoRotation(photoRotation + 90);
+    });
+
+    canvas.addEventListener('mousedown', onDown);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+
+    canvas.addEventListener('touchstart', onDown, { passive: false });
+    window.addEventListener('touchmove', onMove, { passive: false });
+    window.addEventListener('touchend', onUp);
+
+    function onDown(e) {
+      if (!bgReady) return;
+
+      if (e.touches && e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        initialPinchDist = Math.hypot(dx, dy);
+        initialPinchZoom = zoom;
+        return;
+      }
+
+      const spos = getScreenPos(e);
+      const wpos = screenToWorld(spos.x, spos.y);
+
+      // 1. DSD SMILE GUIDES (Smile Arc, Midline, Zenith) Draggable Handles & Curves
+      if (showSmileGuides) {
+        const hitGuide = hitTestGuide(spos, wpos);
+        if (hitGuide) {
+          saveState();
+          isInteracting = true;
+          dragMode = 'guide_handle';
+          selectedGuideHandle = hitGuide;
+          guideDragStart = { x: wpos.x, y: wpos.y };
+          document.getElementById('statusMsg').innerText = "📐 Liniya ushlandi: Uni o'ngga, chapga, yuqoriga yoki pastga bemalol torting!";
+          render();
+          return;
+        }
+      }
+
+      // 2. DSD Freehand Anatomy Line Drawing & Erasing
+      if (currentMode === 'lines') {
+        saveState();
+        isInteracting = true;
+        dragMode = 'anatomy_line';
+        lastBrushPos = wpos;
+        lastAnatomyPos = wpos;
+        drawAnatomy(wpos.x, wpos.y, true);
+        render();
+        return;
+      }
+
+      // 3. MAGIC WAND: Auto-select tooth or move contour control points
+      if (currentMode === 'magic') {
+        if (magicPoints.length > 2) {
+          if (magicEditMode === 'points') {
+            // Check existing handles within 26 screen pixels
+            let closestPoint = null;
+            let minDist = 26;
+            for (let p of magicPoints) {
+              const sp = worldToScreen(p.x, p.y);
+              const d = Math.hypot(spos.x - sp.x, spos.y - sp.y);
+              if (d < minDist) {
+                minDist = d;
+                closestPoint = p;
+              }
+            }
+
+            if (closestPoint) {
+              saveState();
+              selectedMagicPoint = closestPoint;
+              isInteracting = true;
+              dragMode = 'magic_point';
+              render();
+              return;
+            }
+
+            // Check if clicking near curve to insert new point (within 18 screen pixels)
+            let bestSeg = -1;
+            let minSegDist = 18;
+            for (let i = 0; i < magicPoints.length; i++) {
+              const p1 = worldToScreen(magicPoints[i].x, magicPoints[i].y);
+              const p2 = worldToScreen(magicPoints[(i + 1) % magicPoints.length].x, magicPoints[(i + 1) % magicPoints.length].y);
+              const d = distToSegment(spos, p1, p2);
+              if (d < minSegDist) {
+                minSegDist = d;
+                bestSeg = i;
+              }
+            }
+
+            if (bestSeg !== -1) {
+              saveState();
+              const newPt = { x: wpos.x, y: wpos.y };
+              magicPoints.splice(bestSeg + 1, 0, newPt);
+              selectedMagicPoint = newPt;
+              isInteracting = true;
+              dragMode = 'magic_point';
+              document.getElementById('statusMsg').innerText = "📍 Yangi nuqta qo'shildi va surilmoqda!";
+              render();
+              return;
+            }
+
+            document.getElementById('statusMsg').innerText = "💡 Nuqtani suring, chiziqqa bosib yangi nuqta qo'shing yoki boshqa tish uchun '🔄 Boshqa tish'ni bosing.";
+            return;
+          }
+
+          if (magicEditMode === 'sculpt') {
+            saveState();
+            isInteracting = true;
+            dragMode = 'magic_sculpt';
+            lastSculptPos = wpos;
+            applyMagicSculpt(wpos, { x: 0, y: 0 });
+            render();
+            return;
+          }
+        }
+
+        saveState();
+        executeMagicWand(spos.x, spos.y, wpos);
+        magicBar.style.display = 'flex';
+        render();
+        return;
+      }
+
+      if (currentMode === 'paint' || currentMode === 'pull' || currentMode === 'move') {
+        saveState();
+      }
+
+      if (currentMode === 'pipette') {
+        pickColorAt(spos.x, spos.y);
+        return;
+      }
+
+      if (currentMode === 'rotate_photo') {
+        isInteracting = true;
+        dragMode = 'rotate_photo';
+        dragStartPos = spos;
+        initialPhotoRot = photoRotation;
+        return;
+      }
+
+      if (currentMode === 'pan') {
+        isInteracting = true;
+        dragMode = 'pan';
+        dragStartPos = spos;
+        initialPan = { x: panX, y: panY };
+        return;
+      }
+
+      if (currentMode === 'lasso') {
+        isDrawing = true;
+        strokePath = [wpos];
+        render();
+        return;
+      }
+
+      if (currentMode === 'paint' || currentMode === 'pull') {
+        isInteracting = true;
+        dragStartPos = wpos;
+        lastBrushPos = wpos;
+        applyBrushAction(wpos.x, wpos.y, 0, 0);
+        render();
+        return;
+      }
+
+      if (currentMode === 'move') {
+        if (activeTooth) {
+          const loc = toToothLocal(wpos, activeTooth);
+          const hw = activeTooth.w / 2;
+          const hh = activeTooth.h / 2;
+
+          if (Math.hypot(loc.x, loc.y - (-hh - (24 / zoom))) < 24 / zoom) {
+            dragMode = 'rotate_tooth';
+            isInteracting = true;
+            dragStartPos = wpos;
+            initialToothState = { ...activeTooth };
+            return;
+          }
+
+          const cornerTol = 20 / zoom;
+          if (Math.hypot(loc.x - hw, loc.y - hh) < cornerTol) { dragMode = 'resize_br'; isInteracting = true; dragStartPos = wpos; initialToothState = { ...activeTooth }; return; }
+          if (Math.hypot(loc.x - (-hw), loc.y - hh) < cornerTol) { dragMode = 'resize_bl'; isInteracting = true; dragStartPos = wpos; initialToothState = { ...activeTooth }; return; }
+          if (Math.hypot(loc.x - hw, loc.y - (-hh)) < cornerTol) { dragMode = 'resize_tr'; isInteracting = true; dragStartPos = wpos; initialToothState = { ...activeTooth }; return; }
+          if (Math.hypot(loc.x - (-hw), loc.y - (-hh)) < cornerTol) { dragMode = 'resize_tl'; isInteracting = true; dragStartPos = wpos; initialToothState = { ...activeTooth }; return; }
+
+          if (Math.abs(loc.x) <= hw && Math.abs(loc.y) <= hh) {
+            dragMode = 'move_tooth';
+            isInteracting = true;
+            dragStartPos = wpos;
+            initialToothState = { ...activeTooth };
+            return;
+          }
+        }
+
+        for (let i = extractedTeeth.length - 1; i >= 0; i--) {
+          const t = extractedTeeth[i];
+          const loc = toToothLocal(wpos, t);
+          if (Math.abs(loc.x) <= t.w / 2 && Math.abs(loc.y) <= t.h / 2) {
+            selectTooth(t);
+            dragMode = 'move_tooth';
+            isInteracting = true;
+            dragStartPos = wpos;
+            initialToothState = { ...t };
+            render();
+            return;
+          }
+        }
+      }
+    }
+
+    function onMove(e) {
+      if (!bgReady) return;
+
+      if (e.touches && e.touches.length === 2 && initialPinchDist) {
+        e.preventDefault();
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const currentDist = Math.hypot(dx, dy);
+        setZoom(initialPinchZoom * (currentDist / initialPinchDist));
+        return;
+      }
+
+      const spos = getScreenPos(e);
+      const wpos = screenToWorld(spos.x, spos.y);
+
+      // 1. Draggable DSD Smile Guides (Smile Arc, Midline, Zenith)
+      if (dragMode === 'guide_handle' && isInteracting && selectedGuideHandle) {
+        e.preventDefault();
+        const dx = wpos.x - guideDragStart.x;
+        const dy = wpos.y - guideDragStart.y;
+
+        if (selectedGuideHandle === 'arc_p1') {
+          arcP1.x += dx; arcP1.y += dy;
+        } else if (selectedGuideHandle === 'arc_p0') {
+          arcP0.x += dx; arcP0.y += dy;
+        } else if (selectedGuideHandle === 'arc_p2') {
+          arcP2.x += dx; arcP2.y += dy;
+        } else if (selectedGuideHandle === 'arc_body') {
+          arcP0.x += dx; arcP0.y += dy;
+          arcP1.x += dx; arcP1.y += dy;
+          arcP2.x += dx; arcP2.y += dy;
+        } else if (selectedGuideHandle === 'mid_p0') {
+          midP0.x += dx; midP0.y += dy;
+        } else if (selectedGuideHandle === 'mid_p1') {
+          midP1.x += dx; midP1.y += dy;
+        } else if (selectedGuideHandle === 'mid_center' || selectedGuideHandle === 'mid_body') {
+          midP0.x += dx;
+          midP1.x += dx;
+        } else if (selectedGuideHandle === 'zen_p1') {
+          zenP1.x += dx; zenP1.y += dy;
+        } else if (selectedGuideHandle === 'zen_p0') {
+          zenP0.x += dx; zenP0.y += dy;
+        } else if (selectedGuideHandle === 'zen_p2') {
+          zenP2.x += dx; zenP2.y += dy;
+        } else if (selectedGuideHandle === 'zen_body') {
+          zenP0.x += dx; zenP0.y += dy;
+          zenP1.x += dx; zenP1.y += dy;
+          zenP2.x += dx; zenP2.y += dy;
+        }
+
+        guideDragStart = { x: wpos.x, y: wpos.y };
+        render();
+        return;
+      }
+
+      // 2. Lines Drawing & Erasing
+      if (currentMode === 'lines' && isInteracting && dragMode === 'anatomy_line') {
+        e.preventDefault();
+        lastBrushPos = wpos;
+        drawAnatomy(wpos.x, wpos.y, false);
+        render();
+        return;
+      }
+
+      // Magic Point Dragging or Sculpting
+      if (currentMode === 'magic' && isInteracting) {
+        e.preventDefault();
+        if (dragMode === 'magic_point' && selectedMagicPoint) {
+          selectedMagicPoint.x = wpos.x;
+          selectedMagicPoint.y = wpos.y;
+          render();
+          return;
+        }
+        if (dragMode === 'magic_sculpt' && lastSculptPos) {
+          const dx = wpos.x - lastSculptPos.x;
+          const dy = wpos.y - lastSculptPos.y;
+          applyMagicSculpt(wpos, { x: dx, y: dy });
+          lastSculptPos = wpos;
+          render();
+          return;
+        }
+      }
+
+      if (currentMode === 'pipette' && (e.buttons === 1 || e.touches)) {
+        pickColorAt(spos.x, spos.y);
+        return;
+      }
+
+      if (currentMode === 'lasso' && isDrawing) {
+        e.preventDefault();
+        strokePath.push(wpos);
+        render();
+      } else if (isInteracting) {
+        e.preventDefault();
+
+        if (dragMode === 'rotate_photo') {
+          const w = canvas.width / (window.devicePixelRatio || 1);
+          const h = canvas.height / (window.devicePixelRatio || 1);
+          const angle = Math.atan2(spos.y - (h/2 + panY), spos.x - (w/2 + panX));
+          const startAngle = Math.atan2(dragStartPos.y - (h/2 + panY), dragStartPos.x - (w/2 + panX));
+          const diff = (angle - startAngle) * (180 / Math.PI);
+          photoRotation = Math.round(initialPhotoRot + diff);
+          if (photoRotation > 180) photoRotation -= 360;
+          if (photoRotation < -180) photoRotation += 360;
+
+        } else if (dragMode === 'pan') {
+          panX = initialPan.x + (spos.x - dragStartPos.x);
+          panY = initialPan.y + (spos.y - dragStartPos.y);
+
+        } else if (currentMode === 'paint' || currentMode === 'pull') {
+          const dx = wpos.x - dragStartPos.x;
+          const dy = wpos.y - dragStartPos.y;
+          lastBrushPos = wpos;
+          applyBrushAction(wpos.x, wpos.y, dx, dy);
+          dragStartPos = wpos;
+
+        } else if (activeTooth) {
+          if (dragMode === 'move_tooth') {
+            const dx = wpos.x - dragStartPos.x;
+            const dy = wpos.y - dragStartPos.y;
+            activeTooth.x = initialToothState.x + dx;
+            activeTooth.y = initialToothState.y + dy;
+          } else if (dragMode === 'rotate_tooth') {
+            const angle = Math.atan2(wpos.y - activeTooth.y, wpos.x - activeTooth.x);
+            let deg = angle * (180 / Math.PI) + 90;
+            if (deg > 180) deg -= 360;
+            if (deg < -180) deg += 360;
+            activeTooth.rotation = Math.round(deg);
+          } else if (dragMode.startsWith('resize')) {
+            const loc = toToothLocal(wpos, activeTooth);
+            activeTooth.w = Math.max(20, Math.abs(loc.x) * 2);
+            activeTooth.h = Math.max(20, Math.abs(loc.y) * 2);
+          }
+        }
+        render();
+      }
+    }
+
+    function onUp() {
+      if (isDrawing) {
+        isDrawing = false;
+        if (strokePath.length > 5) {
+          document.getElementById('statusMsg').innerText = "✅ Tish belgilandi! Endi '✂ Kesib olish' tugmasini bosing.";
+        }
+      }
+      isInteracting = false;
+      dragMode = null;
+      selectedMagicPoint = null;
+      selectedGuideHandle = null;
+      lastBrushPos = null;
+      lastSculptPos = null;
+      lastAnatomyPos = null;
+      initialPinchDist = null;
+      render();
+    }
+
+    // Freehand Tooth Anatomy Drawer & Eraser
+    function drawAnatomy(x, y, isStart) {
+      const dpr = window.devicePixelRatio || 1;
+      anatomyCtx.save();
+      if (lineMode === 'eraser') {
+        anatomyCtx.globalCompositeOperation = 'destination-out';
+        anatomyCtx.lineWidth = 26 * dpr;
+      } else {
+        anatomyCtx.globalCompositeOperation = 'source-over';
+        anatomyCtx.strokeStyle = anatomyColor;
+        anatomyCtx.lineWidth = anatomyWidth * dpr;
+      }
+      anatomyCtx.lineCap = 'round';
+      anatomyCtx.lineJoin = 'round';
+
+      if (isStart || !lastAnatomyPos) {
+        anatomyCtx.beginPath();
+        anatomyCtx.moveTo(x * dpr, y * dpr);
+        anatomyCtx.lineTo(x * dpr + 0.1, y * dpr + 0.1);
+        anatomyCtx.stroke();
+      } else {
+        anatomyCtx.beginPath();
+        anatomyCtx.moveTo(lastAnatomyPos.x * dpr, lastAnatomyPos.y * dpr);
+        anatomyCtx.lineTo(x * dpr, y * dpr);
+        anatomyCtx.stroke();
+      }
+      lastAnatomyPos = { x, y };
+      anatomyCtx.restore();
+    }
+
+    // SMART MAGIC WAND ALGORITHM
+    function executeMagicWand(screenX, screenY, worldPos) {
+      const dpr = window.devicePixelRatio || 1;
+      const seedPixel = ctx.getImageData(screenX * dpr, screenY * dpr, 1, 1).data;
+      const sr = seedPixel[0], sg = seedPixel[1], sb = seedPixel[2];
+
+      const numRays = 18;
+      const maxDist = 120;
+      const points = [];
+
+      for (let i = 0; i < numRays; i++) {
+        const theta = (i / numRays) * (Math.PI * 2);
+        let rayDist = 20;
+
+        for (let r = 8; r < maxDist; r += 2) {
+          const testWorldX = worldPos.x + Math.cos(theta) * r;
+          const testWorldY = worldPos.y + Math.sin(theta) * r;
+
+          const s = worldToScreen(testWorldX, testWorldY);
+          const px = Math.round(s.x * dpr);
+          const py = Math.round(s.y * dpr);
+
+          if (px >= 0 && px < canvas.width && py >= 0 && py < canvas.height) {
+            const data = ctx.getImageData(px, py, 1, 1).data;
+            const diff = Math.hypot(data[0] - sr, data[1] - sg, data[2] - sb);
+
+            if (diff > magicTolerance) {
+              rayDist = r;
+              break;
+            }
+          }
+          rayDist = r;
+        }
+
+        points.push({
+          x: worldPos.x + Math.cos(theta) * rayDist,
+          y: worldPos.y + Math.sin(theta) * rayDist
+        });
+      }
+
+      magicPoints = points;
+      magicEditMode = 'points';
+      document.getElementById('btnMagicPoints').classList.add('active');
+      document.getElementById('btnMagicSculpt').classList.remove('active');
+      document.getElementById('statusMsg').innerText = "✨ Magic tishni aniqladi! Nuqtalarni suring, '✋ Chegarani surish' orqali itaring yoki '✂ Kesib olish'ni bosing.";
+    }
+
+    // Magic Boundary Sculpt (Push/Pull with finger)
+    function applyMagicSculpt(currWpos, deltaWpos) {
+      if (magicPoints.length === 0) return;
+      const sculptRadius = 45 / zoom;
+      let moved = false;
+      magicPoints.forEach(p => {
+        const d = Math.hypot(p.x - currWpos.x, p.y - currWpos.y);
+        if (d < sculptRadius) {
+          const factor = Math.pow(1 - (d / sculptRadius), 1.4);
+          p.x += deltaWpos.x * factor;
+          p.y += deltaWpos.y * factor;
+          moved = true;
+        }
+      });
+      return moved;
+    }
+
+    // Magic Control Bar Event Listeners
+    document.getElementById('btnMagicPoints').addEventListener('click', () => {
+      magicEditMode = 'points';
+      document.getElementById('btnMagicPoints').classList.add('active');
+      document.getElementById('btnMagicSculpt').classList.remove('active');
+      document.getElementById('statusMsg').innerText = "📍 Nuqtali korreksiya: Nuqtalarni suring yoki chiziq ustiga bosib yangi nuqta qo'shing!";
+      render();
+    });
+
+    document.getElementById('btnMagicSculpt').addEventListener('click', () => {
+      magicEditMode = 'sculpt';
+      document.getElementById('btnMagicSculpt').classList.add('active');
+      document.getElementById('btnMagicPoints').classList.remove('active');
+      document.getElementById('statusMsg').innerText = "✋ Chegara surish: Barmog'ingiz yoki stilus bilan chegarani loydek itarib yoki tortib to'g'rilang!";
+      render();
+    });
+
+    document.getElementById('btnMagicExpand').addEventListener('click', () => {
+      if (magicPoints.length === 0) return;
+      saveState();
+      let cx = 0, cy = 0;
+      magicPoints.forEach(p => { cx += p.x; cy += p.y; });
+      cx /= magicPoints.length; cy /= magicPoints.length;
+
+      magicPoints.forEach(p => {
+        p.x += (p.x - cx) * 0.08;
+        p.y += (p.y - cy) * 0.08;
+      });
+      document.getElementById('statusMsg').innerText = "＋ Chegara 8% kengaytirildi!";
+      render();
+    });
+
+    document.getElementById('btnMagicShrink').addEventListener('click', () => {
+      if (magicPoints.length === 0) return;
+      saveState();
+      let cx = 0, cy = 0;
+      magicPoints.forEach(p => { cx += p.x; cy += p.y; });
+      cx /= magicPoints.length; cy /= magicPoints.length;
+
+      magicPoints.forEach(p => {
+        p.x -= (p.x - cx) * 0.08;
+        p.y -= (p.y - cy) * 0.08;
+      });
+      document.getElementById('statusMsg').innerText = "－ Chegara 8% qisqartirildi!";
+      render();
+    });
+
+    document.getElementById('btnMagicReset').addEventListener('click', () => {
+      saveState();
+      magicPoints = [];
+      magicBar.style.display = 'none';
+      document.getElementById('statusMsg').innerText = "✨ Yangi tish ustiga bosing — Magic avtomatik aniqlaydi.";
+      render();
+    });
+
+    document.getElementById('btnMagicCutNow').addEventListener('click', () => {
+      document.getElementById('btnCut').click();
+    });
+
+    // Lines & Smile Arc Bar Event Listeners
+    function toggleGuides(force) {
+      if (typeof force === 'boolean') {
+        showSmileGuides = force;
+      } else {
+        showSmileGuides = !showSmileGuides;
+      }
+      updateGuidesUI();
+      render();
+    }
+
+    function updateGuidesUI() {
+      const topBtn = document.getElementById('btnToggleAllGuides');
+      if (topBtn) {
+        topBtn.classList.toggle('active', showSmileGuides);
+        topBtn.classList.toggle('highlight', showSmileGuides);
+        topBtn.innerHTML = showSmileGuides ? "🚫 Liniyalarni yashirish" : "👁️ Liniyalar (Ko'rsatish)";
+      }
+      const subBtn = document.getElementById('btnToggleAllGuidesSub');
+      if (subBtn) {
+        subBtn.classList.toggle('active', showSmileGuides);
+        subBtn.innerHTML = showSmileGuides ? "🚫 Yashirish" : "👁️ Liniyalarni yoqish";
+      }
+      const arcBtn = document.getElementById('btnToggleArc');
+      if (arcBtn) arcBtn.classList.toggle('active', showSmileArc && showSmileGuides);
+      const midBtn = document.getElementById('btnToggleMidline');
+      if (midBtn) midBtn.classList.toggle('active', showMidline && showSmileGuides);
+      const zenBtn = document.getElementById('btnToggleZenith');
+      if (zenBtn) zenBtn.classList.toggle('active', showZenithLine && showSmileGuides);
+    }
+
+    document.getElementById('btnToggleAllGuides').addEventListener('click', () => {
+      toggleGuides();
+      document.getElementById('statusMsg').innerText = showSmileGuides
+        ? "📐 Liniyalar yoqildi: Nuqtalarni ushlab xohlagan tarafga torting va suring!"
+        : "🚫 Barcha tabassum va tish liniyalari to'liq yashirildi.";
+    });
+
+    document.getElementById('btnToggleAllGuidesSub').addEventListener('click', () => {
+      toggleGuides();
+      document.getElementById('statusMsg').innerText = showSmileGuides
+        ? "📐 Liniyalar yoqildi: Nuqtalarni ushlab xohlagan tarafga torting va suring!"
+        : "🚫 Barcha tabassum va tish liniyalari to'liq yashirildi.";
+    });
+
+    document.getElementById('btnPencilLine').addEventListener('click', () => {
+      lineMode = 'pencil';
+      document.getElementById('btnPencilLine').classList.add('active');
+      document.getElementById('btnEraseLine').classList.remove('active');
+      document.getElementById('statusMsg').innerText = "✏️ Liniya qalami faol: Tish ustida anatomiya chiziqlarini chizing.";
+      render();
+    });
+
+    document.getElementById('btnEraseLine').addEventListener('click', () => {
+      lineMode = 'eraser';
+      document.getElementById('btnEraseLine').classList.add('active');
+      document.getElementById('btnPencilLine').classList.remove('active');
+      document.getElementById('statusMsg').innerText = "🧹 O'chirgich faol: Barmog'ingiz yoki stilus bilan keraksiz chiziqlar ustidan surib o'chiring.";
+      render();
+    });
+
+    document.getElementById('btnToggleArc').addEventListener('click', () => {
+      showSmileArc = !showSmileArc;
+      if (showSmileArc) showSmileGuides = true;
+      updateGuidesUI();
+      render();
+    });
+
+    document.getElementById('btnToggleMidline').addEventListener('click', () => {
+      showMidline = !showMidline;
+      if (showMidline) showSmileGuides = true;
+      updateGuidesUI();
+      render();
+    });
+
+    document.getElementById('btnToggleZenith').addEventListener('click', () => {
+      showZenithLine = !showZenithLine;
+      if (showZenithLine) showSmileGuides = true;
+      updateGuidesUI();
+      render();
+    });
+
+    const lineColors = ['#00e5ff', '#ffd600', '#ffffff', '#ff4081', '#00e676'];
+    let lineColIdx = 0;
+    document.getElementById('btnPencilColor').addEventListener('click', () => {
+      lineColIdx = (lineColIdx + 1) % lineColors.length;
+      anatomyColor = lineColors[lineColIdx];
+      document.getElementById('btnPencilColor').style.borderColor = anatomyColor;
+      document.getElementById('btnPencilColor').innerText = `🎨 Rang (${anatomyColor})`;
+    });
+
+    document.getElementById('btnClearLines').addEventListener('click', () => {
+      saveState();
+      anatomyCtx.clearRect(0, 0, anatomyCanvas.width, anatomyCanvas.height);
+      showSmileGuides = false;
+      updateGuidesUI();
+      document.getElementById('statusMsg').innerText = "✕ Barcha liniyalar va chiziqlar to'liq o'chirildi va tozalandi.";
+      render();
+    });
+
+    // Magic Sensitivity Slider
+    document.getElementById('slMagicTol').addEventListener('input', e => {
+      magicTolerance = parseInt(e.target.value);
+      document.getElementById('txtMagicTol').innerText = magicTolerance;
+    });
+
+    // Brush Radius Slider
+    document.getElementById('slBrushRadius').addEventListener('input', e => {
+      brushRadius = parseInt(e.target.value);
+      document.getElementById('txtBrushRadius').innerText = `${brushRadius}px`;
+    });
+
+    function pickColorAt(screenX, screenY) {
+      const dpr = window.devicePixelRatio || 1;
+      const pixel = ctx.getImageData(screenX * dpr, screenY * dpr, 1, 1).data;
+      if (pixel[3] > 0) {
+        pickedColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
+        document.getElementById('statusMsg').innerText = `🎯 Rang olindi: ${pickedColor}!`;
+        setTimeout(() => setMode('paint'), 250);
+      }
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+    }
+
+    // Free Pull / Liquify & Paint on Both Photo and Extracted Teeth
+    function applyBrushAction(worldX, worldY, dx, dy) {
+      if (currentMode === 'paint') {
+        const dpr = window.devicePixelRatio || 1;
+        paintCtx.save();
+        paintCtx.globalAlpha = brushOpacity;
+        const grad = paintCtx.createRadialGradient(worldX * dpr, worldY * dpr, 0, worldX * dpr, worldY * dpr, brushRadius * dpr);
+        grad.addColorStop(0, hexToRgba(pickedColor, 1.0));
+        grad.addColorStop(1, hexToRgba(pickedColor, 0));
+        paintCtx.fillStyle = grad;
+        paintCtx.beginPath();
+        paintCtx.arc(worldX * dpr, worldY * dpr, brushRadius * dpr, 0, Math.PI * 2);
+        paintCtx.fill();
+        paintCtx.restore();
+        return;
+      }
+
+      if (currentMode === 'pull') {
+        if (Math.hypot(dx, dy) < 0.2) return;
+
+        let targetCanvas = null;
+        let cx = 0, cy = 0, rad = 0, localDx = 0, localDy = 0;
+
+        // 1. Check if an active extracted tooth is clicked
+        if (activeTooth) {
+          const loc = toToothLocal({ x: worldX, y: worldY }, activeTooth);
+          const hw = activeTooth.w / 2;
+          const hh = activeTooth.h / 2;
+          if (Math.abs(loc.x) <= hw + 20 && Math.abs(loc.y) <= hh + 20) {
+            targetCanvas = activeTooth.canvas;
+            cx = (loc.x + hw) * (targetCanvas.width / activeTooth.w);
+            cy = (loc.y + hh) * (targetCanvas.height / activeTooth.h);
+            rad = brushRadius * (targetCanvas.width / activeTooth.w);
+            const toothRad = (-activeTooth.rotation * Math.PI) / 180;
+            localDx = (dx * Math.cos(toothRad) - dy * Math.sin(toothRad)) * (targetCanvas.width / activeTooth.w);
+            localDy = (dx * Math.sin(toothRad) + dy * Math.cos(toothRad)) * (targetCanvas.height / activeTooth.h);
+          }
+        }
+
+        // 2. Otherwise pull/liquify the base patient photo freely
+        if (!targetCanvas && bgCanvas && bgReady) {
+          targetCanvas = bgCanvas;
+          const w = canvas.width / (window.devicePixelRatio || 1);
+          const h = canvas.height / (window.devicePixelRatio || 1);
+          const imgRatio = bgCanvas.width / bgCanvas.height;
+          const canvasRatio = w / h;
+          let dw = w, dh = h, ddx = 0, ddy = 0;
+          if (canvasRatio > imgRatio) {
+            dh = w / imgRatio;
+            ddy = (h - dh) / 2;
+          } else {
+            dw = h * imgRatio;
+            ddx = (w - dw) / 2;
+          }
+          const scale = bgCanvas.width / dw;
+          cx = (worldX - ddx) * scale;
+          cy = (worldY - ddy) * scale;
+          rad = brushRadius * scale;
+          localDx = dx * scale;
+          localDy = dy * scale;
+        }
+
+        if (!targetCanvas) return;
+
+        const cctx = targetCanvas.getContext('2d');
+        const width = targetCanvas.width, height = targetCanvas.height;
+        const minX = Math.max(0, Math.floor(cx - rad));
+        const maxX = Math.min(width - 1, Math.ceil(cx + rad));
+        const minY = Math.max(0, Math.floor(cy - rad));
+        const maxY = Math.min(height - 1, Math.ceil(cy + rad));
+
+        if (minX >= maxX || minY >= maxY) return;
+
+        const imgData = cctx.getImageData(0, 0, width, height);
+        const copy = new Uint8ClampedArray(imgData.data);
+
+        for (let y = minY; y <= maxY; y++) {
+          for (let x = minX; x <= maxX; x++) {
+            const dist = Math.hypot(x - cx, y - cy);
+            if (dist < rad) {
+              const factor = Math.pow(1 - dist / rad, 2) * 0.65;
+              const srcX = Math.round(x - localDx * factor);
+              const srcY = Math.round(y - localDy * factor);
+
+              if (srcX >= 0 && srcX < width && srcY >= 0 && srcY < height) {
+                const targetIdx = (y * width + x) * 4;
+                const srcIdx = (srcY * width + srcX) * 4;
+                imgData.data[targetIdx] = copy[srcIdx];
+                imgData.data[targetIdx + 1] = copy[srcIdx + 1];
+                imgData.data[targetIdx + 2] = copy[srcIdx + 2];
+                imgData.data[targetIdx + 3] = copy[srcIdx + 3];
+              }
+            }
+          }
+        }
+        cctx.putImageData(imgData, 0, 0);
+      }
+    }
+
+    function hexToRgba(hex, alpha) {
+      let r = parseInt(hex.slice(1, 3), 16);
+      let g = parseInt(hex.slice(3, 5), 16);
+      let b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // ✂ KESIB OLISH (Supports both Magic Contour & Normal Lasso)
+    document.getElementById('btnCut').addEventListener('click', () => {
+      if (!bgReady) {
+        alert("Avval fotosurat yuklang!");
+        return;
+      }
+
+      const pointsToCut = (magicPoints.length > 2) ? magicPoints : strokePath;
+
+      if (pointsToCut.length < 3) {
+        alert("Iltimos, avval 'Magic' orqali tishni bosing yoki qo'lda aylantirib chizing!");
+        return;
+      }
+
+      saveState();
+
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      pointsToCut.forEach(p => {
+        minX = Math.min(minX, p.x);
+        minY = Math.min(minY, p.y);
+        maxX = Math.max(maxX, p.x);
+        maxY = Math.max(maxY, p.y);
+      });
+
+      const cutW = Math.max(20, maxX - minX);
+      const cutH = Math.max(20, maxY - minY);
+
+      const cutCanvas = document.createElement('canvas');
+      cutCanvas.width = cutW;
+      cutCanvas.height = cutH;
+      const cutCtx = cutCanvas.getContext('2d');
+
+      cutCtx.beginPath();
+      if (magicPoints.length > 2) {
+        cutCtx.moveTo(magicPoints[0].x - minX, magicPoints[0].y - minY);
+        for (let i = 0; i < magicPoints.length; i++) {
+          const p1 = magicPoints[i];
+          const p2 = magicPoints[(i + 1) % magicPoints.length];
+          const midX = (p1.x + p2.x) / 2 - minX;
+          const midY = (p1.y + p2.y) / 2 - minY;
+          cutCtx.quadraticCurveTo(p1.x - minX, p1.y - minY, midX, midY);
+        }
+      } else {
+        pointsToCut.forEach((p, i) => {
+          const lx = p.x - minX;
+          const ly = p.y - minY;
+          if (i === 0) cutCtx.moveTo(lx, ly);
+          else cutCtx.lineTo(lx, ly);
+        });
+      }
+      cutCtx.closePath();
+      cutCtx.clip();
+
+      const sourceCanvas = bgCanvas || bg;
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      const imgRatio = sourceCanvas.width / sourceCanvas.height;
+      const canvasRatio = w / h;
+      let dw = w, dh = h, dx = 0, dy = 0;
+      if (canvasRatio > imgRatio) {
+        dh = w / imgRatio;
+        dy = (h - dh) / 2;
+      } else {
+        dw = h * imgRatio;
+        dx = (w - dw) / 2;
+      }
+      cutCtx.drawImage(sourceCanvas, dx - minX, dy - minY, dw, dh);
+
+      const count = extractedTeeth.length + 1;
+      const newTooth = {
+        id: count,
+        name: `Tish ${count}`,
+        canvas: cutCanvas,
+        x: minX + cutW / 2,
+        y: minY + cutH / 2,
+        w: cutW,
+        h: cutH,
+        rotation: 0,
+        flipped: false,
+        brightness: 100,
+        opacity: 0.95
+      };
+
+      extractedTeeth.push(newTooth);
+      selectedTeeth.clear();
+      selectedTeeth.add(newTooth.id);
+      strokePath = [];
+      magicPoints = [];
+      magicBar.style.display = 'none';
+
+      selectTooth(newTooth);
+      setMode('move');
+      updateLayersUI();
+
+      document.getElementById('statusMsg').innerText = "🎉 Magic tish kesib olindi! Shaffoflik va o'lchamini bemalol boshqaring.";
+      render();
+    });
+
+    // ⇄ PARALLEL MULTI-TOOTH SIMMETRIK NUSXA (1, 2, 3+ teeth mirrored together)
+    function mirrorSelectedTeeth() {
+      const teethToMirror = extractedTeeth.filter(t => selectedTeeth.has(t.id) || (selectedTeeth.size === 0 && t === activeTooth));
+      if (teethToMirror.length === 0) {
+        if (extractedTeeth.length > 0) teethToMirror.push(extractedTeeth[extractedTeeth.length - 1]);
+        else { alert("Avval kamida bitta tishni kesib oling!"); return; }
+      }
+
+      saveState();
+
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const midlineX = w * 0.5;
+
+      const newClones = [];
+      teethToMirror.forEach(t => {
+        const mirroredX = midlineX - (t.x - midlineX);
+        const clonedCvs = document.createElement('canvas');
+        clonedCvs.width = t.canvas.width;
+        clonedCvs.height = t.canvas.height;
+        clonedCvs.getContext('2d').drawImage(t.canvas, 0, 0);
+
+        const count = extractedTeeth.length + newClones.length + 1;
+        const cloned = {
+          id: count,
+          name: `Simmetrik ${t.name}`,
+          canvas: clonedCvs,
+          x: mirroredX,
+          y: t.y,
+          w: t.w,
+          h: t.h,
+          rotation: -t.rotation,
+          flipped: !t.flipped,
+          brightness: t.brightness || 100,
+          opacity: t.opacity
+        };
+        newClones.push(cloned);
+      });
+
+      extractedTeeth.push(...newClones);
+      selectedTeeth.clear();
+      newClones.forEach(c => selectedTeeth.add(c.id));
+      selectTooth(newClones[newClones.length - 1]);
+      setMode('move');
+      updateLayersUI();
+
+      document.getElementById('statusMsg').innerText = `✨ ${newClones.length} ta tish bir vaqtda simmetrik nusxalandi!`;
+      render();
+    }
+
+    document.getElementById('btnMirror').addEventListener('click', mirrorSelectedTeeth);
+    document.getElementById('btnMirrorSelected').addEventListener('click', mirrorSelectedTeeth);
+
+    document.getElementById('btnClear').addEventListener('click', () => {
+      strokePath = [];
+      magicPoints = [];
+      magicBar.style.display = 'none';
+      render();
+    });
+
+    document.getElementById('btnUndo').addEventListener('click', undo);
+    window.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+        e.preventDefault();
+        undo();
+      }
+    });
+
+    function selectTooth(t) {
+      activeTooth = t;
+      toothOpacityBadge.style.display = 'flex';
+      document.getElementById('badgeToothName').innerText = `${t.name} shaffofligi:`;
+
+      const pct = Math.round(t.opacity * 100);
+      document.getElementById('badgeOpacitySlider').value = pct;
+      document.getElementById('badgeOpacityVal').innerText = `${pct}%`;
+      document.getElementById('slToothOpacity').value = pct;
+      document.getElementById('txtToothOpacity').innerText = `${pct}%`;
+      updateLayersUI();
+    }
+
+    function setToothOpacity(val) {
+      if (activeTooth) {
+        activeTooth.opacity = val / 100;
+        document.getElementById('badgeOpacitySlider').value = val;
+        document.getElementById('badgeOpacityVal').innerText = `${val}%`;
+        document.getElementById('slToothOpacity').value = val;
+        document.getElementById('txtToothOpacity').innerText = `${val}%`;
+        render();
+      }
+    }
+
+    document.getElementById('badgeOpacitySlider').addEventListener('input', e => setToothOpacity(parseInt(e.target.value)));
+    document.getElementById('slToothOpacity').addEventListener('input', e => setToothOpacity(parseInt(e.target.value)));
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.tool-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.mode === mode);
+      });
+
+      if (mode === 'magic') {
+        document.getElementById('rowMagicTol').style.display = 'flex';
+        document.getElementById('rowBrushRadius').style.display = 'none';
+        if (magicPoints.length > 2) magicBar.style.display = 'flex';
+        linesBar.style.display = 'none';
+        document.getElementById('statusMsg').innerText = "✨ Magic rejimi: Tish ustiga bosing — avtomatik belgilab, nuqtalar va cho'tka bilan to'liq korreksiya qiling.";
+      } else if (mode === 'lines') {
+        document.getElementById('rowMagicTol').style.display = 'none';
+        document.getElementById('rowBrushRadius').style.display = 'none';
+        magicBar.style.display = 'none';
+        linesBar.style.display = 'flex';
+        showSmileGuides = true;
+        updateGuidesUI();
+        document.getElementById('statusMsg').innerText = "📐 Liniyalar rejimi: Nuqtalarni ushlab xohlagancha torting va suring, qalam bilan chizing yoki o'chirgich bilan tozalang!";
+      } else if (mode === 'pull') {
+        document.getElementById('rowMagicTol').style.display = 'none';
+        document.getElementById('rowBrushRadius').style.display = 'flex';
+        magicBar.style.display = 'none';
+        linesBar.style.display = 'none';
+        document.getElementById('statusMsg').innerText = "✋ Tortish (Liquify) rejimi: Fotosurat yoki tishning istalgan joyini stilus yoki barmoq bilan silliq cho'zib, shakl bering!";
+      } else if (mode === 'paint') {
+        document.getElementById('rowMagicTol').style.display = 'none';
+        document.getElementById('rowBrushRadius').style.display = 'flex';
+        magicBar.style.display = 'none';
+        linesBar.style.display = 'none';
+        document.getElementById('statusMsg').innerText = "🎨 Bo'yash rejimi: Tanlangan rang bilan tishlar va milk ustini erkin bo'yang.";
+      } else {
+        document.getElementById('rowMagicTol').style.display = 'none';
+        document.getElementById('rowBrushRadius').style.display = 'none';
+        magicBar.style.display = 'none';
+        linesBar.style.display = 'none';
+      }
+      render();
+    }
+
+    document.querySelectorAll('.tool-btn').forEach(btn => {
+      btn.addEventListener('click', () => setMode(btn.dataset.mode));
+    });
+
+    document.getElementById('zoomIn').addEventListener('click', () => setZoom(zoom * 1.25));
+    document.getElementById('zoomOut').addEventListener('click', () => setZoom(zoom / 1.25));
+    document.getElementById('btnFit').addEventListener('click', () => {
+      panX = 0; panY = 0; photoRotation = 0; setZoom(1.0);
+    });
+
+    function updateLayersUI() {
+      const list = document.getElementById('layersList');
+      list.innerHTML = `<div class="layer-row"><span>Asl fotosurat</span></div>`;
+      document.getElementById('layerCount').innerText = `${extractedTeeth.length} ta tish`;
+
+      extractedTeeth.forEach(t => {
+        const isChecked = selectedTeeth.has(t.id);
+        const row = document.createElement('div');
+        row.className = `layer-row ${t === activeTooth ? 'active' : ''}`;
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.gap = '6px';
+        row.innerHTML = `
+          <input type="checkbox" ${isChecked ? 'checked' : ''} style="cursor:pointer; accent-color:var(--green);" title="Simmetriya uchun tanlash">
+          <span style="flex:1;">${t.name} (${Math.round(t.opacity * 100)}%)</span>
+        `;
+        const cb = row.querySelector('input');
+        cb.addEventListener('change', (ev) => {
+          ev.stopPropagation();
+          if (cb.checked) selectedTeeth.add(t.id);
+          else selectedTeeth.delete(t.id);
+          selectTooth(t);
+        });
+        row.addEventListener('click', () => {
+          selectTooth(t);
+          setMode('move');
+          render();
+        });
+        list.appendChild(row);
+      });
+    }
+
+    document.getElementById('imgInp').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          bg = new Image();
+          bg.onload = () => {
+            bgReady = true;
+            bgCanvas = document.createElement('canvas');
+            bgCanvas.width = bg.width;
+            bgCanvas.height = bg.height;
+            const bgCtx = bgCanvas.getContext('2d');
+            bgCtx.drawImage(bg, 0, 0);
+
+            uploadHero.style.display = 'none';
+            panX = 0; panY = 0; photoRotation = 0;
+            setZoom(1.0);
+            extractedTeeth = [];
+            selectedTeeth.clear();
+            activeTooth = null;
+            magicPoints = [];
+            magicBar.style.display = 'none';
+            linesBar.style.display = 'none';
+            undoStack.length = 0;
+            updateUndoUI();
+            toothOpacityBadge.style.display = 'none';
+            paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+            anatomyCtx.clearRect(0, 0, anatomyCanvas.width, anatomyCanvas.height);
+            updateLayersUI();
+            render();
+            document.getElementById('statusMsg').innerText = "✅ Rasm yuklandi! 'Liniya', 'Magic' yoki 'Tortish' vositalaridan foydalaning.";
+          };
+          bg.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function exportSmileDesign() {
+      if (!bgReady && extractedTeeth.length === 0) {
+        alert("Eksport qilish uchun avval bemor rasmini yuklang!");
+        return;
+      }
+
+      // Create high-res export canvas matching canvas or original photo aspect ratio
+      const w = canvas.width;
+      const h = canvas.height;
+      const expCanvas = document.createElement('canvas');
+      expCanvas.width = w;
+      expCanvas.height = h;
+      const expCtx = expCanvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const sw = w / dpr;
+      const sh = h / dpr;
+
+      expCtx.save();
+      const cx = sw / 2;
+      const cy = sh / 2;
+
+      expCtx.scale(dpr, dpr);
+      expCtx.translate(cx + panX, cy + panY);
+      expCtx.scale(zoom, zoom);
+      expCtx.rotate((photoRotation * Math.PI) / 180);
+      expCtx.translate(-cx, -cy);
+
+      // 1. Photo
+      const photoSource = bgCanvas || bg;
+      if (photoSource && bgReady) {
+        const imgRatio = photoSource.width / photoSource.height;
+        const canvasRatio = sw / sh;
+        let dw = sw, dh = sh, dx = 0, dy = 0;
+        if (canvasRatio > imgRatio) {
+          dh = sw / imgRatio;
+          dy = (sh - dh) / 2;
+        } else {
+          dw = sh * imgRatio;
+          dx = (sw - dw) / 2;
+        }
+        expCtx.drawImage(photoSource, dx, dy, dw, dh);
+      }
+
+      // 2. Teeth Layers (Clean render without bounding boxes or rotation handles)
+      extractedTeeth.forEach(t => {
+        expCtx.save();
+        expCtx.translate(t.x, t.y);
+        expCtx.rotate((t.rotation * Math.PI) / 180);
+        expCtx.globalAlpha = t.opacity;
+        if (t.flipped) expCtx.scale(-1, 1);
+        expCtx.drawImage(t.canvas, -t.w / 2, -t.h / 2, t.w, t.h);
+        expCtx.restore();
+      });
+
+      // 3. Painting
+      expCtx.drawImage(paintCanvas, 0, 0, paintCanvas.width / dpr, paintCanvas.height / dpr);
+
+      // 4. Smile Arc & Anatomy lines (Clean render)
+      if (showSmileGuides) {
+        if (!arcP1) initGuideCoordinates();
+        if (showMidline && midP0 && midP1) {
+          expCtx.save();
+          expCtx.strokeStyle = '#00e676';
+          expCtx.lineWidth = 2.0 / zoom;
+          expCtx.setLineDash([7 / zoom, 4 / zoom]);
+          expCtx.beginPath();
+          expCtx.moveTo(midP0.x, midP0.y);
+          expCtx.lineTo(midP1.x, midP1.y);
+          expCtx.stroke();
+          expCtx.restore();
+        }
+        if (showSmileArc && arcP1) {
+          expCtx.save();
+          expCtx.strokeStyle = '#ffd600';
+          expCtx.lineWidth = 2.8 / zoom;
+          expCtx.setLineDash([7 / zoom, 4 / zoom]);
+          expCtx.beginPath();
+          expCtx.moveTo(arcP0.x, arcP0.y);
+          expCtx.quadraticCurveTo(arcP1.x, arcP1.y, arcP2.x, arcP2.y);
+          expCtx.stroke();
+          expCtx.restore();
+        }
+        if (showZenithLine && zenP1) {
+          expCtx.save();
+          expCtx.strokeStyle = '#ff4081';
+          expCtx.lineWidth = 2.0 / zoom;
+          expCtx.setLineDash([5 / zoom, 4 / zoom]);
+          expCtx.beginPath();
+          expCtx.moveTo(zenP0.x, zenP0.y);
+          expCtx.quadraticCurveTo(zenP1.x, zenP1.y, zenP2.x, zenP2.y);
+          expCtx.stroke();
+          expCtx.restore();
+        }
+      }
+      expCtx.drawImage(anatomyCanvas, 0, 0, anatomyCanvas.width / dpr, anatomyCanvas.height / dpr);
+
+      expCtx.restore();
+
+      // Trigger high-res PNG download
+      try {
+        const link = document.createElement('a');
+        const now = new Date();
+        const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}`;
+        link.download = `Tabassum_Dizayni_${timestamp}.png`;
+        link.href = expCanvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        document.getElementById('statusMsg').innerText = "🎉 Tabassum dizayni yuqori sifatda (PNG) muvaffaqiyatli saqlandi!";
+      } catch (err) {
+        console.error("Export error:", err);
+        alert("Eksport jarayonida xatolik yuz berdi: " + err.message);
+      }
+    }
+
+    document.getElementById('btnExport').addEventListener('click', exportSmileDesign);
+
+    // Initial guides UI sync
+    updateGuidesUI();
+  </script>
+</body>
+</html>
